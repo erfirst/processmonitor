@@ -77,12 +77,13 @@ pub enum Page {
 //entry function for app
 impl Default for MyApp {
     fn default() -> Self {
-        if sysinfo::IS_SUPPORTED_SYSTEM {
+       /*  if sysinfo::IS_SUPPORTED_SYSTEM {
             println!("This OS is supported!");
         } else {
             println!("This OS isn't supported (yet?).");
             std::process::exit(1);
         }
+        */
         let mut sys = sysinfo::System::new_all();
         sys.refresh_all();
         let first_read = GraphDataPoint {
