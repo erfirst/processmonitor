@@ -1,0 +1,15 @@
+[package]
+name = "System_Monitor"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+eframe = "0.30"
+egui = "0.30"
+egui_extras = "0.30"
+sysinfo = "0.37"
+egui_plot = "0.30"
+image = "0.24"
+cpufeatures = "0.2.17"
+lock_keys = "*"
+system_shutdown = "4.0.1"
