@@ -19,27 +19,28 @@ use std::{
 
 use crate::graphdata::{GraphDataList, GraphDataPoint};
 
+#[cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 fn main() -> eframe::Result<()> {
-  // Load image
-    let image = image::open("assets/icon.png")
+    // Load image
+    // Embed icon at compile time
+    let icon_bytes = include_bytes!("../assets/icon.png");
+
+    let image = image::load_from_memory(icon_bytes)
         .expect("Failed to load icon")
         .into_rgba8();
 
     let (width, height) = image.dimensions();
-    let pixels = image.into_raw();
 
     let icon = egui::IconData {
-        rgba: pixels,
+        rgba: image.into_raw(),
         width,
         height,
     };
 
     let options = eframe::NativeOptions {
-        viewport: egui::ViewportBuilder::default()
-            .with_icon(icon),
+        viewport: egui::ViewportBuilder::default().with_icon(icon),
         ..Default::default()
     };
-    
 
     // Note the closure returns Ok(Box<dyn App>) instead of Box<dyn App>
     eframe::run_native(
@@ -77,7 +78,7 @@ pub enum Page {
 //entry function for app
 impl Default for MyApp {
     fn default() -> Self {
-       /*  if sysinfo::IS_SUPPORTED_SYSTEM {
+        /*  if sysinfo::IS_SUPPORTED_SYSTEM {
             println!("This OS is supported!");
         } else {
             println!("This OS isn't supported (yet?).");
@@ -97,7 +98,7 @@ impl Default for MyApp {
         };
         let mut processes = ProcessList::new();
         processes.refresh_from_sysinfo(&mut sys);
-        let cpu_features  = cpupage::detect_cpu_features();
+        let cpu_features = cpupage::detect_cpu_features();
 
         MyApp {
             processes,
