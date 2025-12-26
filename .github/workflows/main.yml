@@ -1,0 +1,27 @@
+name: Rust Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container:
+      image: rust:latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Show environment info
+        run: |
+          set -x
+          rustc --version
+          cargo --version
+          env | sort
+          date -u
+
+      - name: Run tests
+        run: |
+          time cargo test --verbose -- --nocapture --test-threads=1
